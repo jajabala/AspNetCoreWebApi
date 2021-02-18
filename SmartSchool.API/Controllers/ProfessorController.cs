@@ -16,7 +16,7 @@ namespace SmartSchool.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("Professores: Serguio, asd, Jéssica");
+            return Ok("Professores: Serguio, asd, Jéssicasdasdasdasdasdasdasdasda");
         }
 
     }
