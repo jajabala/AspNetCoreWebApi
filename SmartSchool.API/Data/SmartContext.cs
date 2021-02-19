@@ -14,7 +14,7 @@ namespace SmartSchool.API.Data
 
         }
         public DbSet<Aluno> Alunos { get; set; }
-        public DbSet<Professor> Processores { get; set; }
+        public DbSet<Professor> Professores { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
         public DbSet<AlunoDisciplina> AlunosDisciplinas { get; set; }
 

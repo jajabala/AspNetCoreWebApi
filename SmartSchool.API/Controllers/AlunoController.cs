@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SmartSchool.API.Data;
 using SmartSchool.API.Models;
 
@@ -30,13 +31,13 @@ namespace SmartSchool.API.Controllers
         [HttpGet("byId")]
         public IActionResult Get(int id)
         {
-            var aluno = _context.Alunos.FirstOrDefault(alunos => alunos.Id == id);
+            var aluno = _context.Alunos.AsNoTracking().FirstOrDefault(alunos => alunos.Id == id);
             return Ok(aluno);
         }
         [HttpGet("ByName")]
         public IActionResult GetById(string nome, string sobrenome)
         {
-            var aluno = _context.Alunos.FirstOrDefault(alunos => alunos.Nome.Contains(nome) &&
+            var aluno = _context.Alunos.AsNoTracking().FirstOrDefault(alunos => alunos.Nome.Contains(nome) &&
             alunos.Sobrenome.Contains(sobrenome));
             return Ok(aluno);
         }
@@ -52,7 +53,7 @@ namespace SmartSchool.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Aluno aluno)
         {
-            var alu = _context.Alunos.FirstOrDefault(alunos => alunos.Id == id);
+            var alu = _context.Alunos.AsNoTracking().FirstOrDefault(alunos => alunos.Id == id);
 
             if (alu == null) return BadRequest("Não foi encontrado o aluno");
 
@@ -64,7 +65,7 @@ namespace SmartSchool.API.Controllers
         [HttpPatch("{id}")]
         public IActionResult Patch(int id, Aluno aluno)
         {
-            var alu = _context.Alunos.FirstOrDefault(alunos => alunos.Id == id);
+            var alu = _context.Alunos.AsNoTracking().FirstOrDefault(alunos => alunos.Id == id);
 
             if (alu == null) return BadRequest("Não foi encontrado o aluno");
 
@@ -73,7 +74,7 @@ namespace SmartSchool.API.Controllers
             return Ok(aluno);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var aluno = _context.Alunos.FirstOrDefault(alunos => alunos.Id == id);
