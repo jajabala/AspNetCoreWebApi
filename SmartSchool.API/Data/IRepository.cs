@@ -17,8 +17,8 @@ namespace SmartSchool.API.Data
         Aluno[] GetAllAlunos();
         Aluno[] GetAllAlunosByDisciplinasId();
         Aluno[] GetAllAlunosId();
-        Professor[] GetAllProfessor();
-        Professor[] GetAllProfessorByDisciplinasId();
-        Professor[] GetAllProfessorId();
+        Professor[] GetAllProfessores();
+        Professor[] GetAllProfessoresByDisciplinasId();
+        Professor[] GetAllProfessoresId();
     }
 }
