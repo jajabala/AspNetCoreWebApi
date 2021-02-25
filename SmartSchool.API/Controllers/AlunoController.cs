@@ -15,33 +15,26 @@ namespace SmartSchool.API.Controllers
     [ApiController]
     public class AlunoController : ControllerBase
     {
-        private readonly SmartContext _context;
         private readonly IRepository _repo;
 
-        public AlunoController(SmartContext context,
-                               IRepository repo)
+        public AlunoController(IRepository repo)
         {
             _repo = repo;
-            _context = context;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok (_context.Alunos);
+            var result = _repo.GetAllAlunos(true);
+            return Ok(result);
         }
 
-        [HttpGet("byId")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var aluno = _context.Alunos.AsNoTracking().FirstOrDefault(alunos => alunos.Id == id);
-            return Ok(aluno);
-        }
-        [HttpGet("ByName")]
-        public IActionResult GetById(string nome, string sobrenome)
-        {
-            var aluno = _context.Alunos.AsNoTracking().FirstOrDefault(alunos => alunos.Nome.Contains(nome) &&
-            alunos.Sobrenome.Contains(sobrenome));
+            var aluno = _repo.GetAllAlunosId(id, false);
+            if (aluno == null) return BadRequest("Aluno não encontrado");
+
             return Ok(aluno);
         }
 
@@ -60,7 +53,7 @@ namespace SmartSchool.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Aluno aluno)
         {
-            var alu = _context.Alunos.AsNoTracking().FirstOrDefault(alunos => alunos.Id == id);
+            var alu = _repo.GetAllAlunosId(id);
 
             if (alu == null) return BadRequest("Não foi encontrado o aluno");
 
@@ -76,7 +69,7 @@ namespace SmartSchool.API.Controllers
         [HttpPatch("{id}")]
         public IActionResult Patch(int id, Aluno aluno)
         {
-            var alu = _context.Alunos.AsNoTracking().FirstOrDefault(alunos => alunos.Id == id);
+            var alu = _repo.GetAllAlunosId(id);
 
             if (alu == null) return BadRequest("Não foi encontrado o aluno");
 
@@ -92,11 +85,11 @@ namespace SmartSchool.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var aluno = _context.Alunos.FirstOrDefault(alunos => alunos.Id == id);
+            var alu = _repo.GetAllAlunosId(id);
 
-            if (aluno == null) return BadRequest("Não foi encontrado o aluno");
+            if (alu == null) return BadRequest("Não foi encontrado o aluno");
 
-            _repo.Delete(aluno);
+            _repo.Delete(alu);
             if (_repo.SaveChanges())
             {
                 return Ok("Aluno deletado");

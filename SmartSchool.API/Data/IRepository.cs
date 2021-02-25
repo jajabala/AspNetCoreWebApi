@@ -14,11 +14,12 @@ namespace SmartSchool.API.Data
         void Delete<T>(T entity) where T : class;
         bool SaveChanges();
 
-        Aluno[] GetAllAlunos();
-        Aluno[] GetAllAlunosByDisciplinasId();
-        Aluno[] GetAllAlunosId();
-        Professor[] GetAllProfessores();
-        Professor[] GetAllProfessoresByDisciplinasId();
-        Professor[] GetAllProfessoresId();
+        Aluno[] GetAllAlunos(bool includeProfessor = false);
+        Aluno[] GetAllAlunosByDisciplinasId(int disciplinaId, bool includeProfessor = false);
+        Aluno GetAllAlunosId(int alunoId, bool includeProfessor = false);
+        Professor[] GetAllProfessor(bool includeAlunos = false);
+        Professor[] GetAllProfessorByDisciplinasId(int disciplinaId, bool includeAlunos = false);
+        Professor GetAllProfessorId(int professorId, bool includeAlunos = false);
+
     }
 }
